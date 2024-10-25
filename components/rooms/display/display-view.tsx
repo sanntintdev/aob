@@ -3,6 +3,7 @@ import { Card } from '@/components/ui/card';
 import { QrCodeIcon } from 'lucide-react';
 import { DisplayHeader } from './display-header';
 import { QuestionDisplay } from './question-display';
+import { CreateQuestionForm } from './question-form';
 
 export function DisplayView() {
     return (
@@ -10,6 +11,7 @@ export function DisplayView() {
             <DisplayHeader />
 
             <main className="container max-w-6xl mx-auto p-4 md:p-6 space-y-6">
+                <CreateQuestionForm />
                 {/* Active Question Display */}
                 <QuestionDisplay />
 

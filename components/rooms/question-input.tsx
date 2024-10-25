@@ -20,7 +20,7 @@ export const QuestionInput = () => {
                     />
                     <div className="flex items-center justify-between">
                         <p className="text-sm text-muted-foreground">
-                            {200 - question.length} characters remaining
+                            {500 - question.length} characters remaining
                         </p>
                         <Button>Submit Question</Button>
                     </div>
