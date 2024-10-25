@@ -1,16 +1,29 @@
 'use client';
+
 import { Button } from '@/components/ui/button';
 import { ChevronLeft } from 'lucide-react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BasicSettings } from './basic-settings';
-import { AdvancedSettings } from './advance-settings';
+import { useRouter } from 'next/navigation';
+import { createRoom, State } from '@/lib/room/actions';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useActionState } from 'react';
 
 export const RoomForm = () => {
+    const router = useRouter();
+    const initialState: State = { message: null, errors: {} };
+    const [state, formAction] = useActionState(createRoom, initialState);
+
     return (
-        <>
+        <form action={formAction}>
             {/* Header */}
             <div className="flex items-center gap-4 mb-6">
-                <Button variant="ghost" size="icon" className="shrink-0">
+                <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="shrink-0"
+                    onClick={() => router.push('/')}
+                >
                     <ChevronLeft className="h-5 w-5" />
                 </Button>
                 <div>
@@ -19,29 +32,30 @@ export const RoomForm = () => {
                 </div>
             </div>
 
+            {/* Error Message */}
+            {state?.message && (
+                <Alert variant="destructive" className="mb-6">
+                    <AlertDescription>{state.message}</AlertDescription>
+                </Alert>
+            )}
+
             {/* Form */}
-            <Tabs defaultValue="basic" className="space-y-6">
-                <TabsList className="grid grid-cols-2 w-full">
-                    <TabsTrigger value="basic">Basic Setup</TabsTrigger>
-                    <TabsTrigger value="advanced">Advanced Options</TabsTrigger>
-                </TabsList>
-
-                <TabsContent value="basic">
-                    <BasicSettings />
-                </TabsContent>
-
-                <TabsContent value="advanced">
-                    <AdvancedSettings />
-                </TabsContent>
-            </Tabs>
+            <BasicSettings errors={state?.errors} />
 
             {/* Action Buttons */}
             <div className="flex gap-4 mt-6">
-                <Button variant="outline" className="w-full">
+                <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full"
+                    onClick={() => router.push('/')}
+                >
                     Cancel
                 </Button>
-                <Button className="w-full">Create Room</Button>
+                <Button type="submit" className="w-full">
+                    Create Room
+                </Button>
             </div>
-        </>
+        </form>
     );
 };

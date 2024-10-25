@@ -1,10 +1,10 @@
-import { Button } from "../ui/button";
-import { Card, CardContent } from "../ui/card";
-import { Input } from "../ui/input";
+import { Button } from '../ui/button';
+import { Card, CardContent } from '../ui/card';
+import { Input } from '../ui/input';
 
 export const JoinRoomSection = () => {
     return (
-        <div className="bg-white border-y">
+        <div className="bg-white border-y" id="join_session">
             <div className="container mx-auto px-4 py-16">
                 <div className="max-w-md mx-auto text-center space-y-6">
                     <h2 className="text-2xl font-bold text-gray-900">Join an Existing Room</h2>

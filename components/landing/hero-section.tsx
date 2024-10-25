@@ -1,5 +1,6 @@
-import { PlusCircle, Users } from "lucide-react";
-import { Button } from "../ui/button";
+import { PlusCircle, Users } from 'lucide-react';
+import { buttonVariants } from '../ui/button';
+import Link from 'next/link';
 
 export const Hero = () => {
     return (
@@ -14,14 +15,15 @@ export const Hero = () => {
                     required.
                 </p>
                 <div className="flex gap-4 justify-center pt-4">
-                    <Button size="lg" className="gap-2">
+                    <Link href="/rooms/create" className={buttonVariants({ variant: 'default' })}>
                         <PlusCircle className="h-5 w-5" />
                         Create Room
-                    </Button>
-                    <Button size="lg" variant="outline" className="gap-2">
+                    </Link>
+
+                    <Link href="#join_session" className={buttonVariants({ variant: 'outline' })}>
                         <Users className="h-5 w-5" />
                         Join Room
-                    </Button>
+                    </Link>
                 </div>
             </div>
         </div>

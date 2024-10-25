@@ -1,3 +1,5 @@
+'use client';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -5,7 +7,16 @@ import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { MessageSquare, Users } from 'lucide-react';
 
-export const BasicSettings = () => {
+interface BasicSettingsProps {
+    errors?: {
+        title?: string[];
+        description?: string[];
+        participantLimit?: string[];
+        questionCharLimit?: string[];
+    };
+}
+
+export const BasicSettings = ({ errors }: BasicSettingsProps) => {
     return (
         <div className="space-y-6">
             <Card>
@@ -18,7 +29,13 @@ export const BasicSettings = () => {
                 <CardContent className="space-y-6">
                     <div className="space-y-2">
                         <Label htmlFor="title">Room Title</Label>
-                        <Input id="title" placeholder="My Q&A Session" />
+                        <Input
+                            id="title"
+                            name="title"
+                            placeholder="My Q&A Session"
+                            className={errors?.title ? 'border-red-500' : ''}
+                        />
+                        {errors?.title && <p className="text-sm text-red-500">{errors.title[0]}</p>}
                         <p className="text-sm text-gray-500">
                             This will be displayed to all participants
                         </p>
@@ -26,7 +43,15 @@ export const BasicSettings = () => {
 
                     <div className="space-y-2">
                         <Label htmlFor="description">Description (Optional)</Label>
-                        <Input id="description" placeholder="What's this Q&A session about?" />
+                        <Input
+                            id="description"
+                            name="description"
+                            placeholder="What's this Q&A session about?"
+                            className={errors?.description ? 'border-red-500' : ''}
+                        />
+                        {errors?.description && (
+                            <p className="text-sm text-red-500">{errors.description[0]}</p>
+                        )}
                     </div>
 
                     <Separator />
@@ -34,13 +59,24 @@ export const BasicSettings = () => {
                     <div className="space-y-4">
                         <div className="flex items-center justify-between">
                             <div className="space-y-0.5">
-                                <Label>Participant Limit</Label>
+                                <Label htmlFor="participantLimit">Participant Limit</Label>
                                 <p className="text-sm text-gray-500">
                                     Maximum number of participants
                                 </p>
                             </div>
-                            <Input type="number" className="w-24 text-right" defaultValue="100" />
+                            <Input
+                                id="participantLimit"
+                                name="participantLimit"
+                                type="number"
+                                className={`w-24 text-right ${
+                                    errors?.participantLimit ? 'border-red-500' : ''
+                                }`}
+                                defaultValue="100"
+                            />
                         </div>
+                        {errors?.participantLimit && (
+                            <p className="text-sm text-red-500">{errors.participantLimit[0]}</p>
+                        )}
 
                         <div className="flex items-center justify-between">
                             <div className="space-y-0.5">
@@ -49,7 +85,7 @@ export const BasicSettings = () => {
                                     Show questions without moderation
                                 </p>
                             </div>
-                            <Switch />
+                            <Switch name="autoApprove" />
                         </div>
                     </div>
                 </CardContent>
@@ -70,16 +106,27 @@ export const BasicSettings = () => {
                                 Participants can upvote questions
                             </p>
                         </div>
-                        <Switch defaultChecked />
+                        <Switch name="allowVoting" defaultChecked />
                     </div>
 
                     <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                            <Label>Question Character Limit</Label>
+                            <Label htmlFor="questionCharLimit">Question Character Limit</Label>
                             <p className="text-sm text-gray-500">Maximum length of questions</p>
                         </div>
-                        <Input type="number" className="w-24 text-right" defaultValue="200" />
+                        <Input
+                            id="questionCharLimit"
+                            name="questionCharLimit"
+                            type="number"
+                            className={`w-24 text-right ${
+                                errors?.questionCharLimit ? 'border-red-500' : ''
+                            }`}
+                            defaultValue="200"
+                        />
                     </div>
+                    {errors?.questionCharLimit && (
+                        <p className="text-sm text-red-500">{errors.questionCharLimit[0]}</p>
+                    )}
                 </CardContent>
             </Card>
         </div>
