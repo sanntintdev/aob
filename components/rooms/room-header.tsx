@@ -1,18 +1,20 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Users } from 'lucide-react';
 import { useState } from 'react';
 import { ConfirmDialog } from '../ui/confirm-dialog';
+import { useRoomParticipant } from '@/hooks/useRoomParticipant';
+import { ParticipantCount } from './participant-count';
 
 interface RoomHeaderProps {
     title: string;
     roomCode: string;
-    participants: number;
+    participantCount: number;
 }
 
-export const RoomHeader = ({ title, roomCode, participants }: RoomHeaderProps) => {
+export const RoomHeader = ({ title, roomCode, participantCount }: RoomHeaderProps) => {
     const [isLeavingDialogOpen, setIsLeavingDialogOpen] = useState(false);
+    const { handleLeaveRoom } = useRoomParticipant(roomCode);
 
     return (
         <>
@@ -22,10 +24,7 @@ export const RoomHeader = ({ title, roomCode, participants }: RoomHeaderProps) =
                         <h1 className="font-semibold text-lg">{title}</h1>
                         <div className="flex items-center gap-4 text-sm text-muted-foreground">
                             <span>Room: {roomCode}</span>
-                            <span className="flex items-center gap-1">
-                                <Users className="h-4 w-4" />
-                                {participants}
-                            </span>
+                            <ParticipantCount roomCode={roomCode} initialCount={participantCount} />
                         </div>
                     </div>
                     <Button variant="outline" onClick={() => setIsLeavingDialogOpen(true)}>
@@ -40,7 +39,7 @@ export const RoomHeader = ({ title, roomCode, participants }: RoomHeaderProps) =
                 description="Are you sure you want to leave this room? You'll need the room code to rejoin."
                 confirmText="Leave"
                 cancelText="Stay"
-                onConfirm={() => {}}
+                onConfirm={handleLeaveRoom}
             />
         </>
     );

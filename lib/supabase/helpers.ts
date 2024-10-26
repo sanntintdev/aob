@@ -65,3 +65,18 @@ export async function fetchRoomByCode(code: string) {
 
     return data;
 }
+
+export async function fetchParticipantCount(code: string) {
+    const { data, error } = await supabase
+        .from('rooms')
+        .select('participant_count')
+        .eq('code', code)
+        .single();
+
+    if (error) {
+        console.error('Failed to fetch participant count', error);
+        throw error;
+    }
+
+    return data;
+}
