@@ -4,13 +4,14 @@ import { Button } from '@/components/ui/button';
 import { ChevronLeft } from 'lucide-react';
 import { BasicSettings } from './basic-settings';
 import { useRouter } from 'next/navigation';
-import { createRoom, State } from '@/lib/room/actions';
+import { RoomState } from '@/lib/room/types';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useActionState } from 'react';
+import { createRoom } from '@/lib/room/actions';
 
 export const RoomForm = () => {
     const router = useRouter();
-    const initialState: State = { message: null, errors: {} };
+    const initialState: RoomState = { message: '', errors: {} };
     const [state, formAction] = useActionState(createRoom, initialState);
 
     return (

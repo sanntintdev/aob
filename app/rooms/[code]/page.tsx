@@ -1,5 +1,5 @@
 import { RoomView } from '@/components/rooms/room-view';
-import { fetchRoomByCode } from '@/lib/room/data';
+import { fetchRoomByCode } from '@/lib/supabase/helpers';
 
 export const RoomPage = async ({ params }: { params: { code: string } }) => {
     const { code } = await params;
@@ -8,6 +8,7 @@ export const RoomPage = async ({ params }: { params: { code: string } }) => {
     if (!room) {
         return <div>Room not found</div>;
     }
+
     return <RoomView room={room} />;
 };
 
