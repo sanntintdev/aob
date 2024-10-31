@@ -11,8 +11,8 @@ interface BasicSettingsProps {
     errors?: {
         title?: string[];
         description?: string[];
-        participantLimit?: string[];
-        questionCharLimit?: string[];
+        participant_limit?: string[];
+        question_char_limit?: string[];
     };
 }
 
@@ -59,23 +59,23 @@ export const BasicSettings = ({ errors }: BasicSettingsProps) => {
                     <div className="space-y-4">
                         <div className="flex items-center justify-between">
                             <div className="space-y-0.5">
-                                <Label htmlFor="participantLimit">Participant Limit</Label>
+                                <Label htmlFor="participant_limit">Participant Limit</Label>
                                 <p className="text-sm text-gray-500">
                                     Maximum number of participants
                                 </p>
                             </div>
                             <Input
-                                id="participantLimit"
-                                name="participantLimit"
+                                id="participant_limit"
+                                name="participant_limit"
                                 type="number"
                                 className={`w-24 text-right ${
-                                    errors?.participantLimit ? 'border-red-500' : ''
+                                    errors?.participant_limit ? 'border-red-500' : ''
                                 }`}
                                 defaultValue="100"
                             />
                         </div>
-                        {errors?.participantLimit && (
-                            <p className="text-sm text-red-500">{errors.participantLimit[0]}</p>
+                        {errors?.participant_limit && (
+                            <p className="text-sm text-red-500">{errors.participant_limit[0]}</p>
                         )}
 
                         <div className="flex items-center justify-between">
@@ -85,7 +85,7 @@ export const BasicSettings = ({ errors }: BasicSettingsProps) => {
                                     Show questions without moderation
                                 </p>
                             </div>
-                            <Switch name="autoApprove" />
+                            <Switch name="auto_approve" />
                         </div>
                     </div>
                 </CardContent>
@@ -106,26 +106,26 @@ export const BasicSettings = ({ errors }: BasicSettingsProps) => {
                                 Participants can upvote questions
                             </p>
                         </div>
-                        <Switch name="allowVoting" defaultChecked />
+                        <Switch name="allow_voting" defaultChecked />
                     </div>
 
                     <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                            <Label htmlFor="questionCharLimit">Question Character Limit</Label>
+                            <Label htmlFor="question_char_limit">Question Character Limit</Label>
                             <p className="text-sm text-gray-500">Maximum length of questions</p>
                         </div>
                         <Input
-                            id="questionCharLimit"
-                            name="questionCharLimit"
+                            id="question_char_limit"
+                            name="question_char_limit"
                             type="number"
                             className={`w-24 text-right ${
-                                errors?.questionCharLimit ? 'border-red-500' : ''
+                                errors?.question_char_limit ? 'border-red-500' : ''
                             }`}
                             defaultValue="200"
                         />
                     </div>
-                    {errors?.questionCharLimit && (
-                        <p className="text-sm text-red-500">{errors.questionCharLimit[0]}</p>
+                    {errors?.question_char_limit && (
+                        <p className="text-sm text-red-500">{errors.question_char_limit[0]}</p>
                     )}
                 </CardContent>
             </Card>
