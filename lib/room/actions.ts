@@ -5,7 +5,6 @@ import { createNewRoom } from '../supabase/helpers';
 import { RoomSchema, type RoomState } from './types';
 
 export async function createRoom(prevState: RoomState, formData: FormData) {
-    console.log('Creating room', formData);
     const validatedFields = RoomSchema.safeParse({
         title: formData.get('title'),
         description: formData.get('description'),

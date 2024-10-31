@@ -1,4 +1,3 @@
-// lib/supabase/helpers.ts
 import { supabase } from './client';
 import type { NewRoom } from './types';
 import { generateRoomCode } from '../utils';
@@ -30,7 +29,7 @@ async function generateUniqueRoomCode() {
 export async function createNewRoom(roomData: RoomFormData) {
     // Generate a unique room code
     const roomCode = await generateUniqueRoomCode();
-    console.log(roomCode);
+
     const newRoom: NewRoom = {
         code: roomCode,
         title: roomData.title,
@@ -64,6 +63,37 @@ export async function fetchRoomByCode(code: string) {
     }
 
     return data;
+}
+
+export async function fetchRoomWithStatus(code: string) {
+    const { data, error } = await supabase.from('rooms').select('*').eq('code', code).single();
+
+    if (error) throw error;
+
+    const { count: totalQuestions, error: totalError } = await supabase
+        .from('questions')
+        .select('*', { count: 'exact', head: true })
+        .eq('room_id', data.id);
+
+    if (totalError) throw totalError;
+
+    const { count: answeredQuestions, error: answeredError } = await supabase
+        .from('questions')
+        .select('*', { count: 'exact', head: true })
+        .eq('room_id', data.id)
+        .eq('status', 'answered');
+
+    if (answeredError) throw answeredError;
+
+    return {
+        ...data,
+        stats: {
+            participantCount: data.participant_count,
+            totalQuestions: totalQuestions ?? 0,
+            answeredQuestions: answeredQuestions ?? 0,
+            unansweredQuestions: (totalQuestions ?? 0) - (answeredQuestions ?? 0),
+        },
+    };
 }
 
 export async function fetchParticipantCount(code: string) {
